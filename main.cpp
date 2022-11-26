@@ -47,75 +47,40 @@ void timeLogging(int time);
 //counts number of logged workouts
 void counter(int &workoutCount);
 
-//would like to use this once, but have not figured it out
-//currently the "random" numbers often end up the same 
-//srand(time(NULL));
-
-//structs for workout arrays and function prototypes for associated
-//functions that go with structs
-//these also inlude many of the variables used in the program
-struct Weights {
+//structs for workouts
+struct Workouts{
     string word1;
     string word2;
     int sets;
     int reps;
-};
-
-void weights(int menuChoiceInside);
-void weightOutput(int menuChoice, Weights weights[]);
-
-struct KettleBell {
-    string word1;
-    string word2;
-    int sets;
-    int reps;
-};
-
-void kettlebell(int menuChoiceInside);
-void kettlebellOutput(int menuChoice, KettleBell kettlebell[]);
-
-struct Peloton {
     string instructor;
     int time;
     string minutes;
-};
-
-void peloton(int menuChoice);
-void pelotonOutput(int menuChoice, Peloton peloton[]);
-
-struct Core {
-    int sets;
-    string word1;
-    string word2;
+    double distance;
+    int pace;
     int reps1;
 };
 
-void core(int menuChoiceInside);
-void coreOutput(int menuChoice, Core core[]);
+void weights(int menuChoiceInside);
+void weightOutput(int menuChoice, Workouts weights[]);
 
-//will need to hard code the minutes a mile for pace
-struct Run {
-    string word1;
-    double distance;
-    int pace;
-};
+void kettlebell(int menuChoiceInside);
+void kettlebellOutput(int menuChoice, Workouts kettlebell[]);
+
+void peloton(int menuChoice);
+void pelotonOutput(int menuChoice, Workouts peloton[]);
+
+void core(int menuChoiceInside);
+void coreOutput(int menuChoice, Workouts core[]);
 
 void run(int menuChoiceOutside);
-void runOutput(int menuChoice, Run run[]);
-
-struct OutdoorActivity {
-    string word1;
-};
+void runOutput(int menuChoice, Workouts run[]);
 
 void outdoorActivity(int menuChoiceOutside);
-void outdoorActivityOutput(int menuChoice, OutdoorActivity outdoorActivity[]);
-
-struct ActiveRest {
-    string line1;
-};
+void outdoorActivityOutput(int menuChoice, Workouts outdoorActivity[]);
 
 void activeRest(int menuChoiceOutside);
-void activeRestOutput(int menuChoice, ActiveRest activeRest[]);
+void activeRestOutput(int menuChoice, Workouts activeRest[]);
 
 //main only calls starting menu and then exits program
 int main(){
@@ -217,7 +182,7 @@ void outsideMenu(){
 function opens file and loads weights into array*/
 void weights(int menuChoiceInside){
     ifstream infile;
-    Weights weights[length];
+    Workouts weights[length];
     char ch;
     bool end = false;
 
@@ -240,7 +205,7 @@ void weights(int menuChoiceInside){
     insideLoggingMenu(menuChoiceInside);
 }
 //outputs contents of array to user
-void weightOutput(int menuChoice, Weights weights[]){  
+void weightOutput(int menuChoice, Workouts weights[]){  
     srand(time(NULL)); //seeds random number
     int randomNumber = (rand() % 4); //assigns random number to variable 
 
@@ -254,7 +219,7 @@ void weightOutput(int menuChoice, Weights weights[]){
 //loads file contents into array
 void kettlebell(int menuChoiceInside){
     ifstream infile;
-    KettleBell kettlebell[length];
+    Workouts kettlebell[length];
     char ch;
 
     infile.open("kettlebell.txt");
@@ -275,7 +240,7 @@ void kettlebell(int menuChoiceInside){
     insideLoggingMenu(menuChoiceInside);
 }
 //outputs workout to user
-void kettlebellOutput(int menuChoice, KettleBell kettlebell[]){
+void kettlebellOutput(int menuChoice, Workouts kettlebell[]){
     srand(time(NULL)); //seeds random number
     int randomNumber = (rand() % 4);  //assigns random number to variable
 
@@ -289,7 +254,7 @@ void kettlebellOutput(int menuChoice, KettleBell kettlebell[]){
 void peloton(int menuChoiceInside){
 
     ifstream infile;
-    Peloton peloton[length];
+    Workouts peloton[length];
     char ch;
 
     infile.open("peloton.txt");
@@ -309,7 +274,7 @@ void peloton(int menuChoiceInside){
     insideLoggingMenu(menuChoiceInside);
 }
 //outputs Peloton workout to user
-void pelotonOutput(int menuChoice, Peloton peloton[]){
+void pelotonOutput(int menuChoice, Workouts peloton[]){
     srand(time(NULL)); //seeds random number
     int randomNumber = (rand() % 4); //assigns random number to variable
 
@@ -321,7 +286,7 @@ void pelotonOutput(int menuChoice, Peloton peloton[]){
 //loads file contents into array
 void core(int menuChoiceInside){
     ifstream infile;
-    Core core[length];
+    Workouts core[length];
     char ch;
 
     infile.open("core.txt");
@@ -342,7 +307,7 @@ void core(int menuChoiceInside){
     insideLoggingMenu(menuChoiceInside);
 }
 //outputs core workout to user
-void coreOutput(int menuChoice, Core core[]){
+void coreOutput(int menuChoice, Workouts core[]){
     srand(time(NULL));
     int randomNumber = (rand() % 4); 
 
@@ -355,7 +320,7 @@ void coreOutput(int menuChoice, Core core[]){
 //loads file contecnts into array
 void run(int menuChoiceOutside){
     ifstream infile;
-    Run run[length];
+    Workouts run[length];
     char ch;
 
     infile.open("run.txt");
@@ -375,7 +340,7 @@ void run(int menuChoiceOutside){
     outsideLoggingMenu(menuChoiceOutside);
 }
 //outputs run workout to user
-void runOutput(int menuChoice, Run run[]){
+void runOutput(int menuChoice, Workouts run[]){
     srand(time(NULL));
     int randomNumber = (rand() % 4); 
 
@@ -387,7 +352,7 @@ void runOutput(int menuChoice, Run run[]){
 //loads file contents into array
 void outdoorActivity(int menuChoiceOutside){
     ifstream infile;
-    OutdoorActivity outdoorActivity[length];
+    Workouts outdoorActivity[length];
     char ch;
 
     infile.open("outdoorActivity.txt");
@@ -405,7 +370,7 @@ void outdoorActivity(int menuChoiceOutside){
     outsideLoggingMenu(menuChoiceOutside);
 }
 //outputs outdoor activity to user
-void outdoorActivityOutput(int menuChoice, OutdoorActivity outdoorActivity[]){
+void outdoorActivityOutput(int menuChoice, Workouts outdoorActivity[]){
     srand(time(NULL));
     int randomNumber = (rand() % 4); 
 
@@ -415,7 +380,7 @@ void outdoorActivityOutput(int menuChoice, OutdoorActivity outdoorActivity[]){
 //loads file contents into array
 void activeRest(int menuChoiceOutside){
     ifstream infile;
-    ActiveRest activeRest[length];
+    Workouts activeRest[length];
     char ch;
 
     infile.open("activeRest.txt");
@@ -425,7 +390,7 @@ void activeRest(int menuChoiceOutside){
             }
         while (infile){
             for (int i = 0; i < length; i++){
-                getline(infile, activeRest[i].line1);
+                getline(infile, activeRest[i].word1);
             }
             infile.close();
         }
@@ -433,12 +398,12 @@ void activeRest(int menuChoiceOutside){
     outsideLoggingMenu(menuChoiceOutside);
 }
 //outputs active rest workout to user
-void activeRestOutput(int menuChoice, ActiveRest activeRest[]){
-    //srand(time(NULL));
+void activeRestOutput(int menuChoice, Workouts activeRest[]){
+    srand(time(NULL));
     int randomNumber = (rand() % 4); 
 
     cout << "\n___________________________________________\n";
-    cout << activeRest[randomNumber].line1 << endl;
+    cout << activeRest[randomNumber].word1 << endl;
 }
 //menu asking user if they want to log workout
 void insideLoggingMenu(int menuChoiceInside){
@@ -637,3 +602,5 @@ void metrics(int workoutCount){
     cout << "\n\nYou have spent and average of " << avg << " minutes working out\n\n";
     cout << "You have worked out " << workoutCount << " times\n\n";
 }
+
+
