@@ -1,0 +1,13 @@
+This is a log of the workouts you have completed
+
+
+You completed an outdoor activity as a workout 
+Time of workout was 45 minutes
+
+
+You completed an outdoor activity as a workout 
+Time of workout was 22 minutes
+
+
+You completed a run workout 
+Time of workout was 75 minutes

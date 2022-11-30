@@ -3,3 +3,6 @@
 
 #ignore output file
 *.out
+
+#ignore notes file that will be deleted
+notes.txt

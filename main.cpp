@@ -46,6 +46,8 @@ void metrics(int workoutCount);
 void timeLogging(int time);
 //counts number of logged workouts
 void counter(int &workoutCount);
+//displays info
+void infoToUser();
 
 //structs for workouts
 struct Workouts{
@@ -101,7 +103,8 @@ void mainMenu(){
         cout << "This program will choose a workout for you based on choices you make \n\n";
         cout << "1. Indoor workout \n";
         cout << "2. Outdoor workout \n";
-        cout << "3. Exit program \n";
+        cout << "3. Info\n";
+        cout << "4. Exit program \n";
         cout << endl;
         cout << "What is your selection? : ";
         cin >> menuChoice;
@@ -110,7 +113,9 @@ void mainMenu(){
         break;
         case 2: outsideMenu();
         break;
-        case 3: cout << "ending \n";
+        case 3: infoToUser();
+        break;
+        case 4: cout << "ending \n";
                 end = true;
         break;
         default: cout << "Invalid Choice \n";
@@ -468,6 +473,7 @@ void insideLogging(int menuChoice){
 }
 //menu asking if user wants to log workout
 void outsideLoggingMenu(int menuChoiceOutside){
+    m:
     char ch;
     cout << "Would you like to log your workout? Enter Y/N \n";
     cin >> ch;
@@ -479,7 +485,8 @@ void outsideLoggingMenu(int menuChoiceOutside){
             case 'N': cout << "\n\nReturning to previous menu\n\n";
             break;
             default: cout << "you entered an invalid character";
-        }
+                     goto m;
+    }
 }
 //logs outside workout to the file 
 void outsideLogging(int menuChoice){
@@ -564,7 +571,7 @@ void counter(int &workoutCounter){
     }
     outfile.open("counter.txt");
     if (!outfile){
-        cerr <<"database.txt failed to open\n";
+        cerr <<"counter.txt failed to open\n";
         exit(1);
     }
     else {
@@ -580,7 +587,7 @@ void metrics(int workoutCount){
     ofstream outfile;
     double time[workoutCount];
     double sum = 0;
-    double avg;
+    double avg = 0;
 
     infile.open("database.txt");
     if (!infile) {
@@ -598,9 +605,57 @@ void metrics(int workoutCount){
             sum += time[i];
         }
     }
+    if (workoutCount == 1){
+        cout << "Congratulations for logging your first workout!\n\n";
+    }
+    else{
     avg = sum/workoutCount;
-    cout << "\n\nYou have spent and average of " << avg << " minutes working out\n\n";
-    cout << "You have worked out " << workoutCount << " times\n\n";
+    cout << "\n\nYou have spent an average of " << avg << " minutes working out\n\n";
+    cout << "You have worked out " << workoutCount << " time(s)\n\n";
+    }
 }
 
+void infoToUser(){
+    ifstream infile;
+    int count;
+    double sum = 0;
+    double avg = 0;
+    double time[count];
 
+    infile.open("counter.txt");
+    if (!infile){
+        cerr <<"Could not open file\n";
+        exit(1);
+    }
+    else{
+        infile >> count;
+        infile.close();
+    }
+
+    infile.clear();
+    infile.open("database.txt");
+    if (count == 0){
+        cout << "\n\nYou have not completed any workouts\n\n";
+        infile.close();
+    }
+    else{
+        if (!infile){
+            cerr << "Could not open file\n";
+            exit(1);
+        }
+        else{
+            while (infile){
+                for (int i = 0; i < count; i++){
+                    infile >> time[i];
+                }
+                infile.close();
+            }
+        }
+        for (int j = 0; j < count; j++){
+            sum += time[j];
+        }
+        avg = sum/count;
+        cout << "\n\nYou have completed " << count << " workout(s)\n\n";
+        cout << "\n\nYou have workedout for an average of " << avg << " minute(s)\n\n";
+    }
+}
